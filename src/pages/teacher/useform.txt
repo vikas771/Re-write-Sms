@@ -1,0 +1,142 @@
+import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import { Avatar, Button, Grid, Paper, TextField } from "@mui/material";
+import Style from "../super-admin/add-school-form/addschool.module.css";
+import { useRouter } from "next/router";
+import { callApi } from "../../../utils/apicall";
+import { useEffect, useState } from "react";
+
+const AddStudent = () => {
+  const [studentClass, setStudentClass] = useState([]);
+
+  const [StuList, setStuList] = useState([]);
+
+  console.log("studentClass", studentClass);
+
+  const newListStudent = async () => {
+    const ClassId = await callApi("get", "/allclass");
+
+    // console.log("ClassId ===> ", ClassId.data.AllClass);
+    setStuList(ClassId.data.AllClass);
+  };
+
+  console.log("StuList", StuList);
+
+  useEffect(() => {
+    newListStudent();
+  }, []);
+
+  const {
+    register,
+    handleSubmit,
+    // watch,
+    formState: { errors },
+  } = useForm();
+  const onSubmit = async (data) => {
+    console.log("data is here ", data);
+    try {
+      // let details = await callApi("post", "/createstudent", data);
+      toast.success("School added successfully");
+      // router.push("/super-admin/all-user-list");
+    } catch (error) {
+      console.log(error);
+      alert("some thing went wrong");
+    }
+  };
+
+  return (
+    <>
+      <Grid>
+        <Paper elevation={20} className={Style.paperStyle}>
+          <Grid align="center">
+            <Avatar className={Style.avatarStyle}>
+              <AddCircleOutlineIcon />
+            </Avatar>
+            <h2 className={Style.headerStyle}>Add Student</h2>
+          </Grid>
+
+          <div className="container">
+            <form className="row mb-3" onSubmit={handleSubmit(onSubmit)}>
+              <Grid>
+                <Grid>
+                  <TextField
+                    label="Student Name"
+                    variant="standard"
+                    fullWidth
+                    type="text"
+                    name="name"
+                    autoComplete="off"
+                    className="my-2"
+                    {...register("name", { required: true })}
+                    required
+                  />
+                  {errors.exampleRequired && <div>school name is required</div>}
+                </Grid>
+
+                <Grid>
+                  <TextField
+                    label="Email"
+                    fullWidth
+                    variant="standard"
+                    type="email"
+                    name="email"
+                    autoComplete="off"
+                    className="my-2"
+                    {...register("email", { required: true })}
+                    required
+                  />
+                  {errors.exampleRequired && <div>email is required</div>}
+                </Grid>
+
+                <Grid>
+                  <TextField
+                    label="Password"
+                    fullWidth
+                    variant="standard"
+                    type="Password"
+                    required
+                    name="password"
+                    autoComplete="off"
+                    className="my-2"
+                    {...register("password", { required: true })}
+                  />
+                  {errors.exampleRequired && <div>password is required</div>}
+                </Grid>
+
+                <Grid>
+                  <select
+                    name="studentClass"
+                    className="dropdown"
+                    value={studentClass}
+                    onChange={(e) => {
+                      setStudentClass(e.target.value);
+                    }}
+                    id="studentClass"
+                  >
+                    {StuList.length > 0 &&
+                      StuList.map((item) => {
+                        return (
+                          <>
+                            <option value={item._id}>{item.className}</option>;
+                          </>
+                        );
+                      })}
+                  </select>
+                </Grid>
+              </Grid>
+              <div className="text-center my-2 mt-4">
+                <Button variant="contained" color="primary" type="submit">
+                  Add
+                </Button>
+              </div>
+            </form>
+          </div>
+        </Paper>
+      </Grid>
+    </>
+  );
+};
+
+export default AddStudent;

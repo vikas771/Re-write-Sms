@@ -1,0 +1,22 @@
+.paperStyle{
+    padding: 30px 20px;
+     width: 400px;
+      margin: 0 auto ;
+      margin-top: 6px;
+  }
+  
+  .avatarStyle{
+    background-color: #1bbd7e;
+  }
+  
+  
+  .headerStyle{
+    margin: 8px;
+  }
+  
+  
+
+.iconClass{
+    font-size: 30px;
+    color: blue;
+  }

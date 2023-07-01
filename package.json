@@ -1,0 +1,39 @@
+{
+  "name": "scl-system",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@ant-design/icons": "^5.1.3",
+    "@emotion/react": "^11.11.0",
+    "@emotion/styled": "^11.11.0",
+    "@mui/icons-material": "^5.11.16",
+    "@mui/material": "^5.13.3",
+    "@unform/web": "^2.1.6",
+    "axios": "^1.4.0",
+    "bootstrap": "^5.3.0-alpha3",
+    "bootstrap-icons": "^1.10.5",
+    "cross-env": "^7.0.3",
+    "env": "^0.0.2",
+    "env-cmd": "^10.1.0",
+    "eslint": "8.41.0",
+    "eslint-config-next": "13.4.4",
+    "mdb-react-ui-kit": "^6.1.0",
+    "next": "13.4.4",
+    "react": "18.2.0",
+    "react-bootstrap": "^2.7.4",
+    "react-dom": "18.2.0",
+    "react-hook-form": "^7.44.3",
+    "react-toastify": "^9.1.3",
+    "sass": "^1.63.2",
+    "yup": "^1.2.0"
+  },
+  "devDependencies": {
+    "@types/bootstrap": "^5.2.6"
+  }
+}

@@ -1,0 +1,11 @@
+
+.schoolImage{
+  width: 60px;
+  height: 45px;
+  border-radius: 600px;
+}
+
+.MainImg img{
+  width: 100%;
+  height: 40% !important;
+}
