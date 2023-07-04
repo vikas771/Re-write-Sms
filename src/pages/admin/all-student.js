@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from "react";
+import { Button } from "@mui/material";
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { callApi } from "../../../utils/apicall";
+import  Router  from "next/router";
 
 const AllStuent = () => {
   const [userProfile, setUserProfile] = useState([]);
@@ -9,10 +13,24 @@ const AllStuent = () => {
     try {
       let data = await callApi("get", `/allteacher?role=${ShowRole}`);
       setUserProfile(data.data.data);
+      console.log("data of student list",data);
     } catch (error) {
       console.log(error);
     }
   };
+
+  const handleClick = (id) => {
+    // Router.push(`/super-admin/all-user-list/inner-details?id=${id}`)
+    alert(id)
+  };
+
+  const EditDetails = (id) =>{
+    Router.push(`/admin/update-student?id=${id}`)
+  }
+
+  const DeleteDetails = (id) =>{
+    Router.push(`/common-form/delete-student?id=${id}`)
+  }
 
   useEffect(() => {
     UserDetails();
@@ -20,23 +38,26 @@ const AllStuent = () => {
 
   return (
     <>
-
       <div className="container">
         <table className="table align-middle mb-0 bg-white">
           <thead className="bg-light">
             <tr>
+              <th>S.No</th>
               <th>Name</th>
               <th>Role</th>
-              <th>Status</th>
+              <th>View-More</th>
+              <th>Edit</th>
+              <th>Delete</th>
             </tr>
           </thead>
-
           {userProfile &&
             userProfile.map((item, id) => {
               return (
-                <>
-                  <tbody>
+                  <tbody key={item._id}>
                     <tr>
+                    <td>
+                        <p className="fw-normal mb-1">{id+1}</p>
+                      </td>
                       <td>
                         <div className="d-flex align-items-center">
                           <img
@@ -54,12 +75,11 @@ const AllStuent = () => {
                       <td>
                         <p className="fw-normal mb-1">{item.role}</p>
                       </td>
-                      <td>
-                        <span className="badge badge-success rounded-pill d-inline"></span>
-                      </td>
+                      <td > <Button variant="outlined" size="medium" onClick={()=> handleClick(item._id)}>view-more</Button></td>
+                      <td > <Button variant="outlined" size="medium" onClick={()=> EditDetails(item._id)}><EditIcon /></Button></td>
+                      <td > <Button variant="outlined" size="medium" onClick={()=> DeleteDetails(item._id)}><DeleteIcon /></Button></td>
                     </tr>
                   </tbody>
-                </>
               );
             })}
         </table>

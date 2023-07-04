@@ -30,7 +30,6 @@ function Login() {
   };
   return (
     <>
-    <h4>jfflkd</h4>
       <section
         className={`background-radial-gradient  ${Style.backg} overflow-hidden`}
       >

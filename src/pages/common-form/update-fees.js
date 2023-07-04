@@ -5,18 +5,18 @@ import Style from "../teacher/teacher.module.css";
 import { ToastContainer, toast } from "react-toastify";
 import Router from "next/router";
 import { callApi } from "../../../utils/apicall";
+import { useRouter } from "next/router";
 
-const AddExam = () => {
+const UpdateFees = () => {
+  const router = useRouter();
+  const { id } = router.query;
+
   const [classId, setClassId] = useState([]);
   const [selectedClass, setSelectedClass] = useState("");
 
-  const [studentExam, setEtudentExam] = useState({
-    subject: "",
-    date: "",
-    duration: "",
-    totalMarks: "",
+  const [StuFee, setStuFee] = useState({
+    fees: 0,
   });
-
 
   let name, value;
 
@@ -24,6 +24,15 @@ const AddExam = () => {
     const ClassId = await callApi("get", "/allclass");
     setClassId(ClassId.data.allClasses);
     console.log("ClassId", ClassId.data.allClasses);
+  };
+
+  const getAllDetailsFee = async (data) => {
+    try {
+      let details = await callApi("put", `/updatefee/${id}`);
+      console.log("details of Fee", details);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
@@ -38,20 +47,17 @@ const AddExam = () => {
   const handleChange = (e) => {
     name = e.target.name;
     value = e.target.value;
-    setEtudentExam({ ...studentExam, [name]: value });
+    setStuFee({ ...StuFee, [name]: value });
   };
 
   const handleSubmit = async () => {
     try {
-      let data = await callApi("post", "/addexam", {
-        subject: studentExam.subject,
-        date: studentExam.date,
-        duration: studentExam.duration,
-        totalMarks: studentExam.totalMarks,
+      let data = await callApi("post", "/addfee", {
+        fees: StuFee.fees,
         classId: selectedClass,
       });
       console.log(data);
-      toast.success("🦄 Exam added successfully!", {
+      toast.success("🦄 Fees Submitted successfully!", {
         position: "top-center",
         autoClose: 3000,
         theme: "light",
@@ -78,7 +84,7 @@ const AddExam = () => {
             <Avatar style={avatarStyle}>
               <AddCircleOutlineIcon />
             </Avatar>
-            <h2 className={Style.headerStyle}>Add-Exam</h2>
+            <h2 className={Style.headerStyle}>Update-Fees</h2>
           </Grid>
 
           <div className="container">
@@ -89,62 +95,19 @@ const AddExam = () => {
                     variant="standard"
                     required
                     fullWidth
-                    type="text"
-                    id="subject"
-                    value={studentExam.subject}
+                    type="fees"
+                    id="fees"
+                    value={StuFee.fees}
                     onChange={handleChange}
-                    label="Subject"
-                    name="subject"
+                    label="fees"
+                    name="fees"
                   />
                 </Grid>
 
                 <Grid item xs={12}>
-                  <TextField
-                    variant="standard"
-                    required
-                    fullWidth
-                    type="text"
-                    id="duration"
-                    value={studentExam.duration}
-                    onChange={handleChange}
-                    label="Duration"
-                    name="duration"
-                  />
-                </Grid>
-
-                <Grid item xs={12}>
-                  <TextField
-                    variant="standard"
-                    required
-                    fullWidth
-                    type="text"
-                    id="totalMarks"
-                    value={studentExam.totalMarks}
-                    onChange={handleChange}
-                    label="Total Marks"
-                    name="totalMarks"
-                  />
-                </Grid>
-
-                <Grid item xs={12}>
-                  <TextField
-                    variant="standard"
-                    required
-                    fullWidth
-                    type="date"
-                    id="date"
-                    value={studentExam.date}
-                    onChange={handleChange}
-                    // label="Total Marks"
-                    name="date"
-                  />
-                </Grid>
-
-              
-                <Grid className={Style.dropClass}>
-                  <div className={`dropdown mt-2 ${Style.dropClass}`}>
+                  <div>
                     <select
-                      className="form-select"
+                      className={Style.dropClass}
                       value={selectedClass}
                       onChange={handleClassSelect}
                     >
@@ -154,7 +117,6 @@ const AddExam = () => {
                           {classData.className}
                         </option>
                       ))}
-                    
                     </select>
                   </div>
                 </Grid>
@@ -188,4 +150,4 @@ const AddExam = () => {
   );
 };
 
-export default AddExam;
+export default UpdateFees;

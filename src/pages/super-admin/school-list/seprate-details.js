@@ -5,7 +5,6 @@ import { callApi } from "../../../../utils/apicall";
 const SeprateDetails = () => {
   const router = useRouter();
   const { id } = router.query;
-  console.log("user id is here ", id);
 
   const [schoolDetails, setUserDetails] = useState([]);
 
@@ -18,8 +17,6 @@ const SeprateDetails = () => {
       console.log(error);
     }
   };
-
-//   console.log("schoolDetails", schoolDetails);
 
   useEffect(() => {
     StudentDetails();
@@ -93,16 +90,6 @@ const SeprateDetails = () => {
                     </div>
                   </div>
                   <hr />
-                  {/* <div className="row">
-                    <div className="col-sm-3">
-                      <p className="mb-0">Address</p>
-                    </div>
-                    <div className="col-sm-9">
-                      <p className="text-muted mb-0">
-                        Bay Area, San Francisco, CA
-                      </p>
-                    </div>
-                  </div> */}
                 </div>
               </div>
             </div>

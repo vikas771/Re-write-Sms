@@ -5,24 +5,24 @@ import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import { Avatar, Button, Grid, Paper, TextField } from "@mui/material";
 import Style from "../sup-comm.module.css";
 import { callApi } from "../../../../utils/apicall";
-import Router from 'next/router'
+import Router from "next/router";
 
 const index = () => {
   const {
     register,
     handleSubmit,
-    // watch,
     formState: { errors },
   } = useForm();
   const onSubmit = async (data) => {
     console.log("data is here ", data);
     try {
       let details = await callApi("post", "/createschool", data);
-      toast.success("School added successfully");
+      toast.success("School added successfully !");
       Router.push("/super-admin/school-list");
     } catch (error) {
       console.log(error);
       alert("some thing went wrong");
+      toast.error("Something gone wrong !");
     }
   };
 
@@ -49,19 +49,27 @@ const index = () => {
                     name="schoolname"
                     autoComplete="off"
                     className="my-2"
-                    {...register("schoolname", { 
+                    {...register("schoolname", {
+                      pattern: {
+                        value: /^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/,
+                        message:
+                          "School Name should only contain alphabetic characters",
+                      },
                       required: { value: true, message: "Enter School Name" },
-                    minLength: { value: 3, message: "Enter minimum 3 Character" },
-                    maxLength: { value: 8, message: "Enter maximum 15 Character" },
+                      minLength: {
+                        value: 3,
+                        message: "Enter minimum 3 Character",
+                      },
+                      
                     })}
                     required
                   />
                   {errors.schoolname && (
-                  <small style={{ color: "red" }}>
-                    {" "}
-                    {errors.schoolname.message}{" "}
-                  </small>
-                )}
+                    <small style={{ color: "red" }}>
+                      {" "}
+                      {errors.schoolname.message}{" "}
+                    </small>
+                  )}
                 </Grid>
 
                 <Grid>
@@ -73,19 +81,30 @@ const index = () => {
                     name="name"
                     autoComplete="off"
                     className="my-2"
-                    {...register("name", { 
+                    {...register("name", {
+                      pattern: {
+                        value: /^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/,
+                        message:
+                          "Owner Name should only contain alphabetic characters",
+                      },
                       required: { value: true, message: "Enter owner name" },
-                    minLength: { value: 3, message: "Enter minimum 3 Character" },
-                    maxLength: { value: 8, message: "Enter maximum 8 Character" },
+                      minLength: {
+                        value: 3,
+                        message: "Enter minimum 3 Character",
+                      },
+                      maxLength: {
+                        value: 8,
+                        message: "Enter maximum 8 Character",
+                      },
                     })}
                     required
                   />
-                   {errors.name && (
-                  <small style={{ color: "red" }}>
-                    {" "}
-                    {errors.name.message}{" "}
-                  </small>
-                )}
+                  {errors.name && (
+                    <small style={{ color: "red" }}>
+                      {" "}
+                      {errors.name.message}{" "}
+                    </small>
+                  )}
                 </Grid>
 
                 <Grid>
@@ -97,20 +116,25 @@ const index = () => {
                     name="address"
                     autoComplete="off"
                     className="my-2"
-                    {...register("address", { 
+                    {...register("address", {
                       required: { value: true, message: "Enter Address" },
-                    minLength: { value: 3, message: "Enter minimum 3 Character" },
-                    maxLength: { value: 10, message: "Enter maximum 8 Character" },
-
-                     })}
+                      minLength: {
+                        value: 3,
+                        message: "Enter minimum 3 Character",
+                      },
+                      maxLength: {
+                        value: 15,
+                        message: "Enter maximum 8 Character",
+                      },
+                    })}
                     required
                   />
                   {errors.address && (
-                  <small style={{ color: "red" }}>
-                    {" "}
-                    {errors.address.message}{" "}
-                  </small>
-                )}
+                    <small style={{ color: "red" }}>
+                      {" "}
+                      {errors.address.message}{" "}
+                    </small>
+                  )}
                 </Grid>
 
                 <Grid>
@@ -122,20 +146,30 @@ const index = () => {
                     name="city"
                     autoComplete="off"
                     className="my-2"
-                    {...register("city", { 
+                    {...register("city", {
+                      pattern: {
+                        value: /^[A-Za-z]+$/,
+                        message:
+                          "City Name should only contain alphabetic characters",
+                      },
                       required: { value: true, message: "Enter City" },
-                    minLength: { value: 3, message: "Enter minimum 3 Character" },
-                    maxLength: { value: 8, message: "Enter maximum 8 Character" },
-
-                     })}
+                      minLength: {
+                        value: 3,
+                        message: "Enter minimum 3 Character",
+                      },
+                      maxLength: {
+                        value: 8,
+                        message: "Enter maximum 8 Character",
+                      },
+                    })}
                     required
                   />
-                 {errors.city && (
-                  <small style={{ color: "red" }}>
-                    {" "}
-                    {errors.city.message}{" "}
-                  </small>
-                )}
+                  {errors.city && (
+                    <small style={{ color: "red" }}>
+                      {" "}
+                      {errors.city.message}{" "}
+                    </small>
+                  )}
                 </Grid>
 
                 <Grid>
@@ -147,10 +181,20 @@ const index = () => {
                     name="email"
                     autoComplete="off"
                     className="my-2"
-                    {...register("email", { required: true })}
+                    {...register("email", {
+                      pattern: {
+                        value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                        message: "Invalid Email Address",
+                      },
+                    })}
                     required
                   />
-                  {errors.exampleRequired && <div>email is required</div>}
+                  {errors.email && (
+                    <small style={{ color: "red" }}>
+                      {" "}
+                      {errors.email.message}{" "}
+                    </small>
+                  )}
                 </Grid>
 
                 <Grid>
@@ -163,19 +207,24 @@ const index = () => {
                     name="password"
                     autoComplete="off"
                     className="my-2"
-                    {...register("password", { 
+                    {...register("password", {
                       required: { value: true, message: "Enter Password" },
-                    minLength: { value: 3, message: "Enter minimum 3 Character" },
-                    maxLength: { value: 10, message: "Enter maximum 8 Character" },
-
-                     })}
+                      minLength: {
+                        value: 3,
+                        message: "Enter minimum 3 Character",
+                      },
+                      maxLength: {
+                        value: 10,
+                        message: "Enter maximum 8 Character",
+                      },
+                    })}
                   />
-                     {errors.password && (
-                  <small style={{ color: "red" }}>
-                    {" "}
-                    {errors.password.message}{" "}
-                  </small>
-                )}
+                  {errors.password && (
+                    <small style={{ color: "red" }}>
+                      {" "}
+                      {errors.password.message}{" "}
+                    </small>
+                  )}
                 </Grid>
               </Grid>
               <div className="text-center my-2 mt-4">

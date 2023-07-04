@@ -1,22 +1,29 @@
-.paperStyle{
-    padding: 30px 20px;
-     width: 400px;
-      margin: 0 auto ;
-      margin-top: 6px;
-  }
-  
-  .avatarStyle{
-    background-color: #1bbd7e;
-  }
-  
-  
-  .headerStyle{
-    margin: 8px;
-  }
-  
-  
+.paperStyle {
+  padding: 30px 20px;
+  width: 400px;
+  margin: 0 auto;
+}
 
-.iconClass{
-    font-size: 30px;
-    color: blue;
-  }
+.avatarStyle {
+  background-color: #1bbd7e;
+}
+
+.headerStyle {
+  margin: 8px;
+}
+
+.iconClass {
+  font-size: 30px;
+  color: blue;
+}
+
+/* school list css start here  */
+
+
+.schoolImage {
+  width: 60px;
+  height: 45px;
+  border-radius: 600px;
+}
+
+/* school list css end here  */

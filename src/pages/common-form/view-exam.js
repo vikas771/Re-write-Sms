@@ -5,6 +5,8 @@
 import { callApi } from "../../../utils/apicall";
 import Router from 'next/router'
 import { Button } from "@mui/material";
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const ViewExam = () => {
 
@@ -28,7 +30,15 @@ const ViewExam = () => {
     }
   };
 
+  const EditDetails = (id) =>{
+       Router.push(`/common-form/update-exam?id=${id}`);
+  }
 
+  const DeleteDetails = (id) =>{
+    alert(id)
+    // Router.push(`/common-form/delete?id=${id}`)
+    Router.push(`/common-form/delete?id=${id}`)
+  }
   useEffect(()=>{
     UserDetails()
   },[])
@@ -39,18 +49,24 @@ const ViewExam = () => {
         <table className="table align-middle mb-0 bg-white">
           <thead className="bg-light">
             <tr>
+              <th>S.No</th>
               <th>Subject</th>
               <th>Date</th>
               <th>Total-marks</th>
               <th>Time-Duration</th>
+              <th>Edit</th>
+              <th>Delete</th>
             </tr>
           </thead>
 
           {userProfile &&
             userProfile.map((item, id) => {
               return (
-                  <tbody id={item._id}>
+                  <tbody key={item._id}>
                     <tr>
+                    <td>
+                        <p className="fw-normal mb-1">{id+1}</p>
+                      </td>
                       <td>
                         <div className="d-flex align-items-center">
                          
@@ -69,9 +85,9 @@ const ViewExam = () => {
                       <td>
                         <p className="fw-normal mb-1">{item.duration} Hours</p>
                       </td>
-                      <td>
-                        <span className="badge badge-success rounded-pill d-inline"></span>
-                      </td>
+                     
+                      <td > <Button variant="outlined" size="medium" onClick={()=> EditDetails(item._id)}><EditIcon /></Button></td>
+                      <td > <Button variant="outlined" size="medium" onClick={()=> DeleteDetails(item._id)}><DeleteIcon /></Button></td>
                       {/* <td><Button variant="outlined" size="medium" onClick={()=> handleClick(item._id)} >view-more</Button></td> */}
                     </tr>
                   </tbody>

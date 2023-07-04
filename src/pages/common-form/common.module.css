@@ -1,0 +1,21 @@
+
+.paperStyle{
+     padding: 30px 20px;
+    width: 400px;
+     margin: 0 auto
+     };
+
+.headerStyle{ 
+    margin: 8px
+ }
+
+.avatarStyle { 
+    background-color: #1bbd7e 
+};
+
+
+
+.dropWidth{
+    width: 100% !important;
+    background-color: red;
+}

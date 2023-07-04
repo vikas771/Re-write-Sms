@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
-import Style from "./school-list.module.css";
+import Style from "../sup-comm.module.css";
 import { callApi } from "../../../../utils/apicall";
 import { Button } from "@mui/material";
 import  Router  from "next/router";
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+
 
 const index = () => {
   const [schoolData, setSchoolData] = useState([]);
@@ -21,6 +24,13 @@ const index = () => {
     Router.push(`/super-admin/school-list/seprate-details?id=${id}`)
   };
 
+  const EditItem = (id) =>{
+    Router.push(`/super-admin/school-list/edit-school-list?id=${id}`)
+  }
+  const DeleteItem = (id) =>{
+    Router.push(`/super-admin/school-list/delete-school?id=${id}`)
+  }
+
 
   useEffect(() => {
     AllUsers();
@@ -38,17 +48,17 @@ const index = () => {
             <table className="table table-striped">
               <thead data-aos="zoom-in" data-aos-duration="100">
                 <tr className="SchoolListTalble">
-                  <th scope="col">NO</th>
-                  <th scope="col">Profile</th>
-                  <th scope="col">Name</th>
+                  <th scope="col">S.No</th>
+                  <th scope="col">logo</th>
+                  <th scope="col">School Name</th>
                   <th scope="col">Location</th>
                   <th scope="col">Address</th>
                   <th scope="col">Join Year</th>
-                  <th>View-more</th>
-
+                  <th scope="col">View-more</th>
+                  <th scope="col">Edit</th>
+                  <th scope="col">Delete</th>
                 </tr>
               </thead>
-
               {schoolData &&
                 schoolData.map((item, id) => {
                   return (
@@ -68,6 +78,8 @@ const index = () => {
                           <td>{item.address}</td>
                           <td>2022</td>
                           <td > <Button variant="outlined" size="medium" onClick={()=> handleClick(item._id)}>view-more</Button></td>
+                          <td > <Button variant="outlined" size="medium" onClick={()=> EditItem(item._id)}> <EditIcon /></Button></td>
+                          <td > <Button variant="outlined" size="medium" onClick={()=> DeleteItem(item._id)}><DeleteIcon /></Button></td>
                         </tr>
                       </tbody>
                   );

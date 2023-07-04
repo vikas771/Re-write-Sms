@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { callApi } from "../../../utils/apicall";
+import { Button } from "@mui/material";
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import  Router  from "next/router";
 
 const AllTeacher = () => {
   const [userProfile, setUserProfile] = useState([]);
@@ -14,6 +18,19 @@ const AllTeacher = () => {
     }
   };
 
+  const handleClick = (id) => {
+    // Router.push(`/super-admin/all-user-list/inner-details?id=${id}`)
+    alert(id)
+  };
+
+  const EditDetails = (id) =>{
+    Router.push(`/admin/update-teacher?id=${id}`)
+  }
+
+  const DeleteDetails = (id) =>{
+    Router.push(`/admin/delete-teacher?id=${id}`)
+  }
+
   useEffect(() => {
     UserDetails();
   }, []);
@@ -25,18 +42,23 @@ const AllTeacher = () => {
         <table className="table align-middle mb-0 bg-white">
           <thead className="bg-light">
             <tr>
+              <th>S.No</th>
               <th>Name</th>
               <th>Role</th>
-              <th>Status</th>
+              <th>View-More</th>
+              <th>Edit</th>
+              <th>Delete</th>
             </tr>
           </thead>
 
           {userProfile &&
             userProfile.map((item, id) => {
               return (
-                <>
-                  <tbody>
+                  <tbody key={item._id}>
                     <tr>
+                    <td>
+                        <p className="fw-normal mb-1">{id+1}</p>
+                      </td>
                       <td>
                         <div className="d-flex align-items-center">
                           <img
@@ -54,12 +76,12 @@ const AllTeacher = () => {
                       <td>
                         <p className="fw-normal mb-1">{item.role}</p>
                       </td>
-                      <td>
-                        <span className="badge badge-success rounded-pill d-inline"></span>
-                      </td>
+                     
+                      <td > <Button variant="outlined" size="medium" onClick={()=> handleClick(item._id)}>view-more</Button></td>
+                      <td > <Button variant="outlined" size="medium" onClick={()=> EditDetails(item._id)}><EditIcon /></Button></td>
+                      <td > <Button variant="outlined" size="medium" onClick={()=> DeleteDetails(item._id)}><DeleteIcon /></Button></td>
                     </tr>
                   </tbody>
-                </>
               );
             })}
         </table>

@@ -136,9 +136,18 @@ const Navbar = () => {
                           <li>
                             <Link
                               className="dropdown-item"
-                              href="/admin/view-fees"
+                              href="/common-form/view-fees"
                             >
                               Fees{" "}
+                            </Link>
+                            <a className="dropdown-item" href="#"></a>
+                          </li>
+                          <li>
+                            <Link
+                              className="dropdown-item"
+                              href="/common-form/view-exam"
+                            >
+                              Exam{" "}
                             </Link>
                             <a className="dropdown-item" href="#"></a>
                           </li>
@@ -203,6 +212,7 @@ const Navbar = () => {
                   <div className="dropdown ms-2">
                     <button
                       className="btn btn-secondary dropdown-toggle"
+                      style={{ backgroundColor: 'transparent' }}
                       type="button"
                       id="dropdownMenuButton1"
                       data-bs-toggle="dropdown"
@@ -234,6 +244,7 @@ const Navbar = () => {
                   <div className="dropdown ms-2">
                     <button
                       className="btn btn-secondary dropdown-toggle"
+                      style={{ backgroundColor: 'transparent' }}
                       type="button"
                       id="dropdownMenuButton1"
                       data-bs-toggle="dropdown"
@@ -250,7 +261,7 @@ const Navbar = () => {
                           className="dropdown-item"
                           href="/teacher/all-studnet-list"
                         >
-                          View-All-Student
+                          View-Student / Teacher
                         </Link>
                       </li>
 
@@ -260,6 +271,15 @@ const Navbar = () => {
                           href="/common-form/view-exam"
                         >
                           View-Exam-List
+                        </Link>
+                        <a className="dropdown-item" href="#"></a>
+                      </li>
+                      <li>
+                        <Link
+                          className="dropdown-item"
+                          href="/common-form/view-fees"
+                        >
+                          View-Fee
                         </Link>
                         <a className="dropdown-item" href="#"></a>
                       </li>

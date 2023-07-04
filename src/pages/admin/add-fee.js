@@ -96,10 +96,10 @@ const AddFee = () => {
                   />
                 </Grid>
 
-                <Grid item xs={12}>
-                  <div>
+                <Grid className={Style.dropClass}>
+                  <div className={`dropdown mt-2 ${Style.dropClass}`}>
                     <select
-                      className={Style.dropClass}
+                      className="form-select"
                       value={selectedClass}
                       onChange={handleClassSelect}
                     >
@@ -109,6 +109,7 @@ const AddFee = () => {
                           {classData.className}
                         </option>
                       ))}
+                    
                     </select>
                   </div>
                 </Grid>
