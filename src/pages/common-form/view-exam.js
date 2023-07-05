@@ -1,51 +1,52 @@
- 
-
-
- import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { callApi } from "../../../utils/apicall";
-import Router from 'next/router'
+import Router from "next/router";
 import { Button } from "@mui/material";
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { Slide, Rotate } from "react-reveal";
+import Style from "./common.module.css";
 
 const ViewExam = () => {
-
-  const [userProfile, setUserProfile] = useState([]);
-  const [ShowRole, setShowRole] = useState("student");
-
-
-  const handleClick = (id) =>{
-  //  alert(id)
-   Router.push(`/teacher/all-student-details`)
-  }
-
+  const [userExam, setUserExam] = useState([]);
 
   const UserDetails = async () => {
     try {
       let data = await callApi("get", "/allexams");
-      setUserProfile(data.data.exams);  
-    //   Router.push("/teacher/all-studnet-list");
+      setUserExam(data.data.exams);
     } catch (error) {
       console.log(error);
     }
   };
 
-  const EditDetails = (id) =>{
-       Router.push(`/common-form/update-exam?id=${id}`);
-  }
+  const EditDetails = (id) => {
+    Router.push(`/common-form/update-exam?id=${id}`);
+  };
 
-  const DeleteDetails = (id) =>{
-    alert(id)
-    // Router.push(`/common-form/delete?id=${id}`)
-    Router.push(`/common-form/delete?id=${id}`)
-  }
-  useEffect(()=>{
-    UserDetails()
-  },[])
+  const DeleteDetails = (id) => {
+    Router.push(`/common-form/delete-exam?id=${id}`);
+  };
+  useEffect(() => {
+    UserDetails();
+  }, []);
+
+  const formatDate = (dateString) => {
+    const options = {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    };
+    return new Date(dateString).toLocaleDateString(undefined, options);
+  };
 
   return (
     <>
       <div className="container">
+        <div className="text-center text-dark pb-2 p-3">
+          <Rotate bottom left>
+            <h1>Exam-List</h1>
+          </Rotate>
+        </div>
         <table className="table align-middle mb-0 bg-white">
           <thead className="bg-light">
             <tr>
@@ -58,18 +59,17 @@ const ViewExam = () => {
               <th>Delete</th>
             </tr>
           </thead>
-
-          {userProfile &&
-            userProfile.map((item, id) => {
-              return (
-                  <tbody key={item._id}>
+          <tbody>
+            {userExam && userExam.length > 0 ? (
+              userExam.map((item, id) => {
+                return (
+                  <Slide left key={item._id}>
                     <tr>
-                    <td>
-                        <p className="fw-normal mb-1">{id+1}</p>
+                      <td>
+                        <p className="fw-normal mb-1">{id + 1}</p>
                       </td>
                       <td>
                         <div className="d-flex align-items-center">
-                         
                           <div className="ms-3">
                             <p className="fw-bold mb-1">{item.subject}</p>
                             <p className="text-muted mb-0">{item.email}</p>
@@ -77,7 +77,7 @@ const ViewExam = () => {
                         </div>
                       </td>
                       <td>
-                        <p className="fw-normal mb-1">{item.date}</p>
+                        <p className="fw-normal mb-1">{formatDate(item.date)}</p>
                       </td>
                       <td>
                         <p className="fw-normal mb-1">{item.totalMarks}</p>
@@ -85,14 +85,38 @@ const ViewExam = () => {
                       <td>
                         <p className="fw-normal mb-1">{item.duration} Hours</p>
                       </td>
-                     
-                      <td > <Button variant="outlined" size="medium" onClick={()=> EditDetails(item._id)}><EditIcon /></Button></td>
-                      <td > <Button variant="outlined" size="medium" onClick={()=> DeleteDetails(item._id)}><DeleteIcon /></Button></td>
-                      {/* <td><Button variant="outlined" size="medium" onClick={()=> handleClick(item._id)} >view-more</Button></td> */}
+                      <td>
+                        {" "}
+                        <Button
+                          variant="outlined"
+                          size="medium"
+                          onClick={() => EditDetails(item._id)}
+                        >
+                          <EditIcon />
+                        </Button>
+                      </td>
+                      <td>
+                        {" "}
+                        <Button
+                          variant="outlined"
+                          size="medium"
+                          onClick={() => DeleteDetails(item._id)}
+                        >
+                          <DeleteIcon />
+                        </Button>
+                      </td>
                     </tr>
-                  </tbody>
-              );
-            })}
+                  </Slide>
+                );
+              })
+            ) : (
+              <tr>
+                <td colSpan="7" className="text-center p-4">
+                  <h2 className={Style.emptyColor}>Exam-List Empty</h2>
+                </td>
+              </tr>
+            )}
+          </tbody>
         </table>
       </div>
     </>

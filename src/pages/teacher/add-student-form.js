@@ -124,10 +124,10 @@ const AddStudent = () => {
                   />
                 </Grid>
 
-                <Grid item xs={12}>
-                  <div>
+                <Grid className={Style.dropClass}>
+                  <div className={`dropdown mt-2 ${Style.dropClass}`}>
                     <select
-                      className={Style.dropClass}
+                      className="form-select"
                       value={selectedClass}
                       onChange={handleClassSelect}
                     >
@@ -137,9 +137,11 @@ const AddStudent = () => {
                           {classData.className}
                         </option>
                       ))}
+                    
                     </select>
                   </div>
                 </Grid>
+
               </Grid>
             </form>
             <div className="text-center">

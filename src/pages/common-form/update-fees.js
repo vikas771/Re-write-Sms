@@ -2,10 +2,11 @@ import { useEffect, useState } from "react";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import { Avatar, Button, Grid, Paper, TextField } from "@mui/material";
 import Style from "../teacher/teacher.module.css";
-import { ToastContainer, toast } from "react-toastify";
 import Router from "next/router";
 import { callApi } from "../../../utils/apicall";
 import { useRouter } from "next/router";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const UpdateFees = () => {
   const router = useRouter();
@@ -13,6 +14,7 @@ const UpdateFees = () => {
 
   const [classId, setClassId] = useState([]);
   const [selectedClass, setSelectedClass] = useState("");
+  const [previosClass , setPreviousClass] = useState("")
 
   const [StuFee, setStuFee] = useState({
     fees: 0,
@@ -23,25 +25,27 @@ const UpdateFees = () => {
   const newListStudent = async () => {
     const ClassId = await callApi("get", "/allclass");
     setClassId(ClassId.data.allClasses);
-    console.log("ClassId", ClassId.data.allClasses);
   };
 
-  const getAllDetailsFee = async (data) => {
+  const getAllDetailsById = async () => {
     try {
-      let details = await callApi("put", `/updatefee/${id}`);
-      console.log("details of Fee", details);
+      let details = await callApi("get", `/feesbyclassid/${id}`);
+      setPreviousClass(details.data);
     } catch (error) {
       console.log(error);
     }
   };
 
+
   useEffect(() => {
     newListStudent();
+    getAllDetailsById()
   }, []);
+
+
 
   const handleClassSelect = (event) => {
     setSelectedClass(event.target.value);
-    console.log(event.target.value);
   };
 
   const handleChange = (e) => {
@@ -52,25 +56,17 @@ const UpdateFees = () => {
 
   const handleSubmit = async () => {
     try {
-      let data = await callApi("post", "/addfee", {
+      let details = await callApi("put", `/updatefee/${id}`, {
         fees: StuFee.fees,
-        classId: selectedClass,
+        // classId: selectedClass,
       });
-      console.log(data);
-      toast.success("🦄 Fees Submitted successfully!", {
-        position: "top-center",
-        autoClose: 3000,
-        theme: "light",
-      });
-      Router.push("/admin/admin-deshboard");
+      console.log(details);
+      toast.success("Fee Updated successfully !");
+    
+      Router.push("/common-form/view-fees");
     } catch (error) {
       console.log(error);
-      toast.error("🦄 Please check all fileds!", {
-        position: "top-center",
-        autoClose: 3000,
-        hideProgressBar: false,
-        theme: "light",
-      });
+      toast.error("Something gone wrong !");
     }
   };
 
@@ -104,7 +100,7 @@ const UpdateFees = () => {
                   />
                 </Grid>
 
-                <Grid item xs={12}>
+                {/* <Grid item xs={12}>
                   <div>
                     <select
                       className={Style.dropClass}
@@ -119,7 +115,7 @@ const UpdateFees = () => {
                       ))}
                     </select>
                   </div>
-                </Grid>
+                </Grid> */}
               </Grid>
             </form>
             <div className="text-center">
@@ -136,16 +132,7 @@ const UpdateFees = () => {
         </Paper>
       </Grid>
 
-      <ToastContainer
-        position="top-right"
-        autoClose={3000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        draggable
-        theme="light"
-      />
-      <ToastContainer />
+     
     </>
   );
 };

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { callApi } from "../../../utils/apicall";
-import { Button } from "@mui/material";
 import Router from "next/router";
+import { Slide } from "react-reveal";
+
 
 const UserProfile = () => {
   const [userProfile, setUserProfile] = useState([]);
@@ -17,7 +18,6 @@ const UserProfile = () => {
 
   const editDetails = (id) => {
     Router.push(`/common-form/edit-profile?id=${id}`);
-    // alert(id)
   };
 
   useEffect(() => {
@@ -25,7 +25,9 @@ const UserProfile = () => {
   }, []);
   return (
     <>
-      <h2 className="text-center">Welcome {userProfile.name} </h2>
+     <Slide  left>
+      <h2 className="text-center p-3">Welcome {userProfile.name} </h2>
+      </Slide>
       <section style={{ backgroundColor: "#eee" }}>
         <div className="container py-5">
           <div className="row">
@@ -56,6 +58,7 @@ const UserProfile = () => {
                 </div>
               </div>
             </div>
+            <Slide left>
             <div className="col-lg-8">
               <div className="card mb-4">
                 <div className="card-body">
@@ -108,6 +111,7 @@ const UserProfile = () => {
                 </div>
               </div>
             </div>
+            </Slide>
           </div>
         </div>
       </section>

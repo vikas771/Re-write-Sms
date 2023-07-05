@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { callApi } from "../../../utils/apicall";
+import { Slide, Rotate } from "react-reveal";
+
 
 const allStudentDetails = () => {
   const router = useRouter();
@@ -29,6 +31,11 @@ const allStudentDetails = () => {
   return (
     <>
       <section style={{ backgroundColor: "#eee" }}>
+      <div className="text-center text-dark pb-2 p-3">
+          <Rotate bottom left>
+            <h1>Welcome to {schoolDetails.name} profile</h1>
+          </Rotate>
+        </div>
         <div className="container py-5">
           <div className="row">
             <div className="col-lg-4">
@@ -70,25 +77,25 @@ const allStudentDetails = () => {
                       <p className="text-muted mb-0">{schoolDetails.email}</p>
                     </div>
                   </div>
-                  <hr />
+                  {/* <hr />
                   <div className="row">
                     <div className="col-sm-3">
                       <p className="mb-0">Address</p>
                     </div>
                     <div className="col-sm-9">
-                      {/* <p className="text-muted mb-0">{schoolDetails}</p> */}
+                      <p className="text-muted mb-0">{schoolDetails}</p>
                     </div>
-                  </div>
-                  <hr />
+                  </div> */}
+                  {/* <hr />
                   <div className="row">
                     <div className="col-sm-3">
                       <p className="mb-0">City</p>
                     </div>
                     <div className="col-sm-9">
-                      {/* <p className="text-muted mb-0">{schoolDetails}</p> */}
+                      <p className="text-muted mb-0">{schoolDetails}</p>
                     </div>
                   </div>
-                  <hr />
+                  <hr /> */}
               
                 </div>
               </div>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import Link from "next/link";
 import Style from '../super-admin/sup-comm.module.css'
 import { callApi } from "../../../utils/apicall";
+
 const Deshboard = () => {
   const [dashboard, setDashboard] = useState([]);
 

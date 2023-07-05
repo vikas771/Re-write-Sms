@@ -2,14 +2,13 @@ import React, { useEffect, useState } from "react";
 import Style from "../sup-comm.module.css";
 import { callApi } from "../../../../utils/apicall";
 import { Button } from "@mui/material";
-import  Router  from "next/router";
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
-
+import Router from "next/router";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { Slide, Rotate } from "react-reveal";
 
 const index = () => {
   const [schoolData, setSchoolData] = useState([]);
-
 
   const AllUsers = async () => {
     try {
@@ -21,28 +20,27 @@ const index = () => {
   };
 
   const handleClick = (id) => {
-    Router.push(`/super-admin/school-list/seprate-details?id=${id}`)
+    Router.push(`/super-admin/school-list/seprate-details?id=${id}`);
   };
 
-  const EditItem = (id) =>{
-    Router.push(`/super-admin/school-list/edit-school-list?id=${id}`)
-  }
-  const DeleteItem = (id) =>{
-    Router.push(`/super-admin/school-list/delete-school?id=${id}`)
-  }
-
+  const EditItem = (id) => {
+    Router.push(`/super-admin/school-list/edit-school-list?id=${id}`);
+  };
+  const DeleteItem = (id) => {
+    Router.push(`/super-admin/school-list/delete-school?id=${id}`);
+  };
 
   useEffect(() => {
     AllUsers();
   }, []);
 
-
   return (
     <>
       <div className="container p-3 SchoollistPOsition">
-        <div className="">
-          <div className="text-center text-dark pb-2">
+          <div className="text-center text-dark pb-2 p-3">
+          <Rotate bottom left>
             <h1>School-List</h1>
+            </Rotate>
           </div>
           <div className="">
             <table className="table table-striped">
@@ -59,34 +57,64 @@ const index = () => {
                   <th scope="col">Delete</th>
                 </tr>
               </thead>
-              {schoolData &&
+              {schoolData ?
                 schoolData.map((item, id) => {
                   return (
-                   
-                      <tbody key={item._id}>
-                        <tr data-aos="zoom-out-down" data-aos-duration="700">
-                          <th scope="row">{id + 1}</th>
-                          <td>
+                    <Slide  left key={item._id}>
+                    <tbody>
+                      <tr data-aos="zoom-out-down" data-aos-duration="700">
+                        <th scope="row">{id + 1}</th>
+                        <td>
+                          {" "}
+                          <img alt="scl" className={Style.schoolImage} />
+                        </td>
+                        <td>{item.schoolname}</td>
+                        <td>{item.city}</td>
+                        <td>{item.address}</td>
+                        <td>2022</td>
+                        <td>
+                          {" "}
+                          <Button
+                            variant="outlined"
+                            size="medium"
+                            onClick={() => handleClick(item._id)}
+                          >
+                            view-more
+                          </Button>
+                        </td>
+                        <td>
+                          {" "}
+                          <Button
+                            variant="outlined"
+                            size="medium"
+                            onClick={() => EditItem(item._id)}
+                          >
                             {" "}
-                            <img
-                              alt="scl"
-                              className={Style.schoolImage}
-                             />
-                          </td>
-                          <td>{item.schoolname}</td>
-                          <td>{item.city}</td>
-                          <td>{item.address}</td>
-                          <td>2022</td>
-                          <td > <Button variant="outlined" size="medium" onClick={()=> handleClick(item._id)}>view-more</Button></td>
-                          <td > <Button variant="outlined" size="medium" onClick={()=> EditItem(item._id)}> <EditIcon /></Button></td>
-                          <td > <Button variant="outlined" size="medium" onClick={()=> DeleteItem(item._id)}><DeleteIcon /></Button></td>
-                        </tr>
-                      </tbody>
+                            <EditIcon />
+                          </Button>
+                        </td>
+                        <td>
+                          {" "}
+                          <Button
+                            variant="outlined"
+                            size="medium"
+                            onClick={() => DeleteItem(item._id)}
+                          >
+                            <DeleteIcon />
+                          </Button>
+                        </td>
+                      </tr>
+                    </tbody>
+                    </Slide>
                   );
-                })}
+                })
+                : <div className="text-center text-dark pb-2 p-3">
+          <Rotate bottom left>
+            <h1>School-List-Empty</h1>
+            </Rotate>
+          </div>}
             </table>
           </div>
-        </div>
       </div>
     </>
   );

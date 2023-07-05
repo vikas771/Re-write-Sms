@@ -10,6 +10,9 @@ import { Router } from "next/router";
 import Login from "@/Component/common-forms/login";
 import Navbar from "@/Component/common-forms/navbar";
 import Footer from "@/Component/common-forms/footer";
+// import 'react-reveal/css/reveal.css';
+// import 'react-reveal/css/transition.css';
+
 
 export default function App({ Component, pageProps }) {
   const LocalSData = localDetails();

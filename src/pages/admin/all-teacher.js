@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { callApi } from "../../../utils/apicall";
 import { Button } from "@mui/material";
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
-import  Router  from "next/router";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
+import Router from "next/router";
+import { Slide,Rotate } from "react-reveal";
 
 const AllTeacher = () => {
   const [userProfile, setUserProfile] = useState([]);
@@ -19,17 +20,16 @@ const AllTeacher = () => {
   };
 
   const handleClick = (id) => {
-    // Router.push(`/super-admin/all-user-list/inner-details?id=${id}`)
-    alert(id)
+    Router.push(`/admin/view-details?id=${id}`)
   };
 
-  const EditDetails = (id) =>{
-    Router.push(`/admin/update-teacher?id=${id}`)
-  }
+  const EditDetails = (id) => {
+    Router.push(`/admin/update-teacher?id=${id}`);
+  };
 
-  const DeleteDetails = (id) =>{
-    Router.push(`/admin/delete-teacher?id=${id}`)
-  }
+  const DeleteDetails = (id) => {
+    Router.push(`/admin/delete-teacher?id=${id}`);
+  };
 
   useEffect(() => {
     UserDetails();
@@ -37,8 +37,12 @@ const AllTeacher = () => {
 
   return (
     <>
-
       <div className="container">
+        <div className="text-center text-dark pb-2 p-3">
+          <Rotate bottom left>
+            <h1>Teacher-List</h1>
+          </Rotate>
+        </div>
         <table className="table align-middle mb-0 bg-white">
           <thead className="bg-light">
             <tr>
@@ -50,40 +54,68 @@ const AllTeacher = () => {
               <th>Delete</th>
             </tr>
           </thead>
-
+          <tbody>
           {userProfile &&
             userProfile.map((item, id) => {
               return (
-                  <tbody key={item._id}>
-                    <tr>
+                <Slide left key={item._id}>
+                  <tr>
                     <td>
-                        <p className="fw-normal mb-1">{id+1}</p>
-                      </td>
-                      <td>
-                        <div className="d-flex align-items-center">
-                          <img
-                            src="https://mdbootstrap.com/img/new/avatars/8.jpg"
-                            alt=""
-                            style={{ width: 45, height: 45 }}
-                            className="rounded-circle"
-                          />
-                          <div className="ms-3">
-                            <p className="fw-bold mb-1">{item.name}</p>
-                            <p className="text-muted mb-0">{item.email}</p>
-                          </div>
+                      <p className="fw-normal mb-1">{id + 1}</p>
+                    </td>
+                    <td>
+                      <div className="d-flex align-items-center">
+                        <img
+                          src="https://mdbootstrap.com/img/new/avatars/8.jpg"
+                          alt=""
+                          style={{ width: 45, height: 45 }}
+                          className="rounded-circle"
+                        />
+                        <div className="ms-3">
+                          <p className="fw-bold mb-1">{item.name}</p>
+                          <p className="text-muted mb-0">{item.email}</p>
                         </div>
-                      </td>
-                      <td>
-                        <p className="fw-normal mb-1">{item.role}</p>
-                      </td>
-                     
-                      <td > <Button variant="outlined" size="medium" onClick={()=> handleClick(item._id)}>view-more</Button></td>
-                      <td > <Button variant="outlined" size="medium" onClick={()=> EditDetails(item._id)}><EditIcon /></Button></td>
-                      <td > <Button variant="outlined" size="medium" onClick={()=> DeleteDetails(item._id)}><DeleteIcon /></Button></td>
-                    </tr>
-                  </tbody>
+                      </div>
+                    </td>
+                    <td>
+                      <p className="fw-normal mb-1">{item.role}</p>
+                    </td>
+
+                    <td>
+                      {" "}
+                      <Button
+                        variant="outlined"
+                        size="medium"
+                        onClick={() => handleClick(item._id)}
+                      >
+                        view-more
+                      </Button>
+                    </td>
+                    <td>
+                      {" "}
+                      <Button
+                        variant="outlined"
+                        size="medium"
+                        onClick={() => EditDetails(item._id)}
+                      >
+                        <EditIcon />
+                      </Button>
+                    </td>
+                    <td>
+                      {" "}
+                      <Button
+                        variant="outlined"
+                        size="medium"
+                        onClick={() => DeleteDetails(item._id)}
+                      >
+                        <DeleteIcon />
+                      </Button>
+                    </td>
+                  </tr>
+                </Slide>
               );
             })}
+            </tbody>
         </table>
       </div>
     </>

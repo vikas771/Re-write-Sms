@@ -19,3 +19,7 @@
     width: 100% !important;
     background-color: red;
 }
+
+.emptyColor{
+    color: red;
+}

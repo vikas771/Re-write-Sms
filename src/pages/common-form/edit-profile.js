@@ -27,7 +27,6 @@ const EditProfile = () => {
     try {
       let details = await callApi("get", `/userbyId/${id}`);
         setUserData(details.data.user)
-
         console.log("details",details)
     } catch (error) {
       console.log(error);
@@ -36,7 +35,6 @@ const EditProfile = () => {
 
   const onSubmit = async (data) => {
     try {
-      // let details = await callApi("get", `/userData/${id}`);
       await callApi("put", `/updateusers/${id}`, data);
       toast.success("Profile Updated successfully !");
       Router.push("/common-form/profile-page");

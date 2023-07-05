@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { callApi } from "../../../../utils/apicall";
 import Style from '../sup-comm.module.css'
+import { Slide, Rotate } from "react-reveal";
+
 const index = () => {
   
   const [dashboard, setDashboard] = useState([]);
@@ -23,6 +25,11 @@ const index = () => {
 
   return (
           <div className="container-fluid d-flex flex-column p-5 mainboxofdata ">
+          <div className="text-center text-dark pb-2 p-2 mb-3">
+          <Rotate bottom left>
+            <h1>Welcome to super-Admin Deshboard</h1>
+            </Rotate>
+          </div>
             <div className="row">
               <div className="col-xl-4 col-md-6 mb-4">
                 <div className="card border-left-success shadow h-100 py-2">

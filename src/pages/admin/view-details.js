@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { callApi } from "../../../../utils/apicall";
 import { Slide, Rotate } from "react-reveal";
+import { callApi } from "../../../utils/apicall";
 
-const InnerDdetails = () => {
+const viewDetails = () => {
   const router = useRouter();
   const { id } = router.query;
 
@@ -11,8 +11,9 @@ const InnerDdetails = () => {
 
   const StudentDetails = async () => {
     try {
-      const data = await callApi("get", `/singleadmin/${id}`);
+      const data = await callApi("get", `/singleteacher/${id}`);
       setUserDetails(data.data.user);
+    console.log("data===",data.data.user)
     } catch (error) {
       console.log(error);
     }
@@ -30,7 +31,7 @@ const InnerDdetails = () => {
             <h1>Welcome to {userDetails.name} profile</h1>
           </Rotate>
         </div>
-        <div className="container py-5">
+        <div className="container py-3">
           <div className="row">
             <div className="col-lg-4">
               <div className="card mb-4">
@@ -117,4 +118,4 @@ const InnerDdetails = () => {
   );
 };
 
-export default InnerDdetails;
+export default viewDetails;

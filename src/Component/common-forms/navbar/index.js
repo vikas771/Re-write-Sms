@@ -106,6 +106,7 @@ const Navbar = () => {
                       <div className="dropdown">
                         <button
                           className="btn btn-secondary dropdown-toggle"
+                          style={{ backgroundColor: 'transparent' }}
                           type="button"
                           id="dropdownMenuButton1"
                           data-bs-toggle="dropdown"
@@ -157,6 +158,7 @@ const Navbar = () => {
                       <div className="dropdown ms-2">
                         <button
                           className="btn btn-secondary dropdown-toggle"
+                          style={{ backgroundColor: 'transparent' }}
                           type="button"
                           id="dropdownMenuButton1"
                           data-bs-toggle="dropdown"

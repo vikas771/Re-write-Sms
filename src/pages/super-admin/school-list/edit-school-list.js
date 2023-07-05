@@ -25,7 +25,7 @@ const EditSchool = () => {
     try {
       let details = await callApi("get", `/schooldetails/${id}`);
       setSchoolDetails(details.data.School);
-      // console.log("details", details.data.School);
+      console.log("details", details.data.School);
     } catch (error) {
       console.log(error);
     }
@@ -77,12 +77,6 @@ const EditSchool = () => {
                           message:
                             "School Name should only contain alphabetic characters",
                         },
-                        required: { value: true, message: "Enter School Name" },
-                        minLength: {
-                          value: 3,
-                          message: "Enter minimum 3 Character",
-                        },
-                        
                       })}
                       required
                     />
@@ -94,7 +88,7 @@ const EditSchool = () => {
                     )}
                   </Grid>
 
-                  <Grid>
+                  {/* <Grid>
                     <TextField
                       label="Owner Name"
                       fullWidth
@@ -115,10 +109,6 @@ const EditSchool = () => {
                           value: 3,
                           message: "Enter minimum 3 Character",
                         },
-                        maxLength: {
-                          value: 8,
-                          message: "Enter maximum 8 Character",
-                        },
                       })}
                       required
                     />
@@ -128,7 +118,7 @@ const EditSchool = () => {
                         {errors.name.message}{" "}
                       </small>
                     )}
-                  </Grid>
+                  </Grid> */}
 
                   <Grid>
                     <TextField
@@ -145,10 +135,6 @@ const EditSchool = () => {
                         minLength: {
                           value: 3,
                           message: "Enter minimum 3 Character",
-                        },
-                        maxLength: {
-                          value: 10,
-                          message: "Enter maximum 8 Character",
                         },
                       })}
                       required
