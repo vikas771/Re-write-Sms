@@ -6,8 +6,11 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useForm } from "react-hook-form";
 import  Router  from "next/router";
+import { useEffect, useState } from "react";
 
 const index = () => {
+
+  const [role, setrole] = useState('');
 
   const {
     register,
@@ -15,7 +18,7 @@ const index = () => {
     formState: { errors },
   } = useForm();
   const onSubmit = async (data) => {
-    console.log("data is here ", data);
+    data.role = role;
     try {
       let details = await callApi("post", "/addteacher", data);
       toast.success("Added successfully !");
@@ -26,6 +29,9 @@ const index = () => {
     }
   };
 
+  useEffect(() => {
+    console.log('Selected value:', role);
+  }, [role]);
 
   return (
     <>
@@ -71,7 +77,6 @@ const index = () => {
                     </small>
                   )}
                 </Grid>
-
 
                 <Grid>
                   <TextField
@@ -128,7 +133,7 @@ const index = () => {
                   )}
                 </Grid>
 
-                <Grid>
+                {/* <Grid>
                   <TextField
                     label="Role"
                     fullWidth
@@ -146,6 +151,21 @@ const index = () => {
                       {errors.role.message}{" "}
                     </small>
                   )}
+                </Grid> */}
+
+                <Grid className={Style.dropClass}>
+                  <div className={`dropdown mt-2 ${Style.dropClass}`}>
+                    <select
+                      className="form-select"
+                      value={role} 
+                      onChange={(e) => setrole(e.target.value)}
+                    >
+                      <option value="">Select Role</option>
+                        <option  value="student">Student</option>
+                        <option  value="teacher">Teacher</option>
+                    
+                    </select>
+                  </div>
                 </Grid>
 
               </Grid>

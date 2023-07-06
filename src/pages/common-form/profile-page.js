@@ -35,7 +35,7 @@ const UserProfile = () => {
               <div className="card mb-4">
                 <div className="card-body text-center">
                   <img
-                    src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
+                    src="https://res.cloudinary.com/dyflu4oar/image/upload/v1639810998/filmifeed-dp_kngmfm.jpg"
                     alt="avatar"
                     className="rounded-circle img-fluid"
                     style={{ width: 150 }}

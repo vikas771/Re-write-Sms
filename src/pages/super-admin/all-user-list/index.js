@@ -5,13 +5,17 @@ import { Button } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Slide, Rotate } from "react-reveal";
-
+import deleteItem from "../../../../utils/delete-function";
 
 const AllUser = () => {
-  const [userProfile, setUserProfile] = useState([]);
+  const [userData, setUserData] = useState([]);
 
   const [Role, UserRole] = useState("");
   const [Search, SetSeatch] = useState("");
+  const [deleteStatus, SetdeleteStatus] = useState(false);
+
+
+
 
   const UserDetails = async () => {
     try {
@@ -28,7 +32,7 @@ const AllUser = () => {
         var data = await callApi("get", "/alladmin");
       }
 
-      setUserProfile(data.data.data);
+      setUserData(data.data.data);
     } catch (error) {
       console.log(error);
     }
@@ -42,22 +46,33 @@ const AllUser = () => {
     Router.push(`/super-admin/all-user-list/update-all-uer-list?id=${id}`);
   };
 
-  const DeleteDetails = (id) => {
-    Router.push(`/common-form/delete?id=${id}`);
+  const DeleteUser = async (id) => {
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this User ?"
+    );
+    if (confirmed) {
+      try {
+        await deleteItem("/deleteadmin", id);
+        SetdeleteStatus(true)
+        console.log("Item deleted");
+      } catch (error) {
+        console.error(error.message);
+      }
+    }
   };
 
   useEffect(() => {
     UserDetails();
-  }, [Role, Search]);
+  }, [Role, Search,deleteStatus]);
 
   return (
     <>
       <div className="container mt-3">
-      <div className="text-center text-dark pb-2 p-2">
-      <Rotate bottom left>
+        <div className="text-center text-dark pb-2 p-2">
+          <Rotate bottom left>
             <h1>User-List</h1>
-            </Rotate>
-          </div>
+          </Rotate>
+        </div>
         <div className="pagetitle">
           <ol className="breadcrumb">
             <li className="breadcrumb-item active">
@@ -100,11 +115,11 @@ const AllUser = () => {
             </tr>
           </thead>
           <tbody>
-              {userProfile &&
-                userProfile.map((item, index) => {
-                  return (
-                    <Slide  left key={item._id}>
-                    <tr >
+            {userData &&
+              userData.map((item, index) => {
+                return (
+                  <Slide left key={item._id}>
+                    <tr>
                       <td>
                         <p className="fw-normal mb-1">{index + 1}</p>
                       </td>
@@ -150,15 +165,15 @@ const AllUser = () => {
                         <Button
                           variant="outlined"
                           size="medium"
-                          onClick={() => DeleteDetails(item._id)}
+                          onClick={() => DeleteUser(item._id)}
                         >
                           <DeleteIcon />
                         </Button>
                       </td>
                     </tr>
-                    </Slide>
-                  );
-                })}
+                  </Slide>
+                );
+              })}
           </tbody>
         </table>
       </div>

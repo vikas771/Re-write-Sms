@@ -24,9 +24,8 @@ const Navbar = () => {
 
   const ClearLOcalData = () => {
     localStorage.clear();
-    // Router.push({pathname:"/"});
+    // Router.reload();
     Router.push("/");
-    Router.reload();
   };
 
   return (

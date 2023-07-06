@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import { Avatar, Button, Grid, Paper, TextField } from "@mui/material";
 import Style from "../teacher/teacher.module.css";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Router from "next/router";
 import { callApi } from "../../../utils/apicall";
 
@@ -16,7 +17,6 @@ const AddExam = () => {
     duration: "",
     totalMarks: "",
   });
-
 
   let name, value;
 
@@ -51,20 +51,11 @@ const AddExam = () => {
         classId: selectedClass,
       });
       console.log(data);
-      toast.success("🦄 Exam added successfully!", {
-        position: "top-center",
-        autoClose: 3000,
-        theme: "light",
-      });
+      toast.success("Added successfully !");
       Router.push("/admin/admin-deshboard");
     } catch (error) {
       console.log(error);
-      toast.error("🦄 Please check all fileds!", {
-        position: "top-center",
-        autoClose: 3000,
-        hideProgressBar: false,
-        theme: "light",
-      });
+      toast.error("Something gone wrong!");
     }
   };
 
@@ -140,7 +131,6 @@ const AddExam = () => {
                   />
                 </Grid>
 
-              
                 <Grid className={Style.dropClass}>
                   <div className={`dropdown mt-2 ${Style.dropClass}`}>
                     <select
@@ -154,7 +144,6 @@ const AddExam = () => {
                           {classData.className}
                         </option>
                       ))}
-                    
                     </select>
                   </div>
                 </Grid>
@@ -173,17 +162,6 @@ const AddExam = () => {
           </div>
         </Paper>
       </Grid>
-
-      <ToastContainer
-        position="top-right"
-        autoClose={3000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        draggable
-        theme="light"
-      />
-      <ToastContainer />
     </>
   );
 };

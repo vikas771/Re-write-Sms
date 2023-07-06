@@ -6,9 +6,11 @@ import Router from "next/router";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Slide, Rotate } from "react-reveal";
+import deleteItem from "../../../../utils/delete-function";
 
 const index = () => {
   const [schoolData, setSchoolData] = useState([]);
+  const [deleteStatus, SetdeleteStatus] = useState(false);
 
   const AllUsers = async () => {
     try {
@@ -26,13 +28,24 @@ const index = () => {
   const EditItem = (id) => {
     Router.push(`/super-admin/school-list/edit-school-list?id=${id}`);
   };
-  const DeleteItem = (id) => {
-    Router.push(`/super-admin/school-list/delete-school?id=${id}`);
+  const DeleteUser = async (id) => {
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this school ?"
+    );
+    if (confirmed) {
+      try {
+        await deleteItem("/deleteschool", id);
+        SetdeleteStatus(true)
+        console.log("Item deleted");
+      } catch (error) {
+        console.error(error.message);
+      }
+    }
   };
 
   useEffect(() => {
     AllUsers();
-  }, []);
+  }, [deleteStatus]);
 
   return (
     <>
@@ -98,7 +111,7 @@ const index = () => {
                           <Button
                             variant="outlined"
                             size="medium"
-                            onClick={() => DeleteItem(item._id)}
+                            onClick={() => DeleteUser(item._id)}
                           >
                             <DeleteIcon />
                           </Button>

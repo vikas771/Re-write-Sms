@@ -1,8 +1,9 @@
 
 import React, { useEffect, useState } from "react";
-import Link from "next/link";
 import Style from '../super-admin/sup-comm.module.css'
 import { callApi } from "../../../utils/apicall";
+import { Slide, Rotate } from "react-reveal";
+
 const Deshboard = () => {
   const [dashboard, setDashboard] = useState([]);
 
@@ -12,7 +13,6 @@ const Deshboard = () => {
       const adminData = await callApi("get", "/adminpanelforstudent");
       setDashboard(adminData.data);
       console.log(adminData.data);
-    //   console.log("lkfklklfjklf",adminData);
     } catch (error) {
       console.error(error);
     }
@@ -23,8 +23,12 @@ const Deshboard = () => {
   }, []);
 
   return (
-        <div id="content">
           <div className="container-fluid d-flex flex-column p-5 mainboxofdata">
+          <div className="text-center text-dark pb-2 p-2 mb-3">
+          <Rotate bottom left>
+            <h1>Welcome to Student Deshboard</h1>
+            </Rotate>
+          </div>
             <div className="row">
               <div className="col-xl-4 col-md-6 mb-4">
                 <div className="card border-left-success shadow h-100 py-2">
@@ -85,7 +89,6 @@ const Deshboard = () => {
               </div>
             </div>
           </div>
-        </div>
   );
 };
 

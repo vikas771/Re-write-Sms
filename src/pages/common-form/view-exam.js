@@ -6,10 +6,11 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Slide, Rotate } from "react-reveal";
 import Style from "./common.module.css";
+import deleteItem from "../../../utils/delete-function";
 
 const ViewExam = () => {
   const [userExam, setUserExam] = useState([]);
-
+  const [deleteStatus, SetdeleteStatus] = useState(false);
   const UserDetails = async () => {
     try {
       let data = await callApi("get", "/allexams");
@@ -23,12 +24,24 @@ const ViewExam = () => {
     Router.push(`/common-form/update-exam?id=${id}`);
   };
 
-  const DeleteDetails = (id) => {
-    Router.push(`/common-form/delete-exam?id=${id}`);
+
+  const DeleteExam = async (id) => {
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this school ?"
+    );
+    if (confirmed) {
+      try {
+        await deleteItem("/examdelete", id);
+        SetdeleteStatus(true)
+        console.log("Item deleted");
+      } catch (error) {
+        console.error(error.message);
+      }
+    }
   };
   useEffect(() => {
     UserDetails();
-  }, []);
+  }, [deleteStatus]);
 
   const formatDate = (dateString) => {
     const options = {
@@ -100,7 +113,7 @@ const ViewExam = () => {
                         <Button
                           variant="outlined"
                           size="medium"
-                          onClick={() => DeleteDetails(item._id)}
+                          onClick={() => DeleteExam(item._id)}
                         >
                           <DeleteIcon />
                         </Button>

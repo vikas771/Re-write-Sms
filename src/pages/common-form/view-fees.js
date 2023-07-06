@@ -6,10 +6,11 @@ import { callApi } from "../../../utils/apicall";
 import Router from "next/router";
 import { Slide, Rotate } from "react-reveal";
 import Style from './common.module.css'
+import deleteItem from "../../../utils/delete-function";
 
 const ViewFees = () => {
   const [studentFee, setstudentFee] = useState([]);
-
+  const [deleteStatus, SetdeleteStatus] = useState(false);
   const UserDetails = async () => {
     try {
       let data = await callApi("get", "/allfees");
@@ -23,13 +24,25 @@ const ViewFees = () => {
     Router.push(`/common-form/update-fees?id=${id}`);
   };
 
-  const DeleteDetails = (id) => {
-    Router.push(`/common-form/delete-fees?id=${id}`);
+
+  const DeleteFee = async (id) => {
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this school ?"
+    );
+    if (confirmed) {
+      try {
+        await deleteItem("/deletefess", id);
+        SetdeleteStatus(true)
+        console.log("Item deleted");
+      } catch (error) {
+        console.error(error.message);
+      }
+    }
   };
 
   useEffect(() => {
     UserDetails();
-  }, []);
+  }, [deleteStatus]);
   return (
     <div className="container">
       <div className="text-center text-dark pb-2 p-3">
@@ -50,7 +63,6 @@ const ViewFees = () => {
         <tbody>
           {studentFee && studentFee.length > 0 ? (
             studentFee.map((item, index) => {
-              console.log("class id ", item.classId);
               return (
                 <Slide left key={item._id}>
                   <tr>
@@ -82,7 +94,7 @@ const ViewFees = () => {
                       <Button
                         variant="outlined"
                         size="medium"
-                        onClick={() => DeleteDetails(item._id)}
+                        onClick={() => DeleteFee(item._id)}
                       >
                         <DeleteIcon />
                       </Button>

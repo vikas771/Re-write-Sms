@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import { Avatar, Button, Grid, Paper, TextField } from "@mui/material";
 import Style from '../teacher/teacher.module.css'
-import { ToastContainer, toast } from "react-toastify";
 import  Router from "next/router";
 import { callApi } from "../../../utils/apicall";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const AddFee = () => {
   const [classId, setClassId] = useState([]);
@@ -47,20 +48,11 @@ const AddFee = () => {
         classId: selectedClass,
       });
       console.log(data);
-      toast.success("🦄 Fees Submitted successfully!", {
-        position: "top-center",
-        autoClose: 3000,
-        theme: "light",
-      });
+      toast.success("Added successfully !");
       Router.push("/admin/admin-deshboard");
     } catch (error) {
       console.log(error);
-      toast.error("🦄 Please check all fileds!", {
-        position: "top-center",
-        autoClose: 3000,
-        hideProgressBar: false,
-        theme: "light",
-      });
+      toast.error("Something gone wrong !");
     }
   };
 

@@ -5,16 +5,17 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { callApi } from "../../../utils/apicall";
 import Router from "next/router";
 import { Slide, Rotate } from "react-reveal";
+import deleteItem from "../../../utils/delete-function";
 
 const AllStuent = () => {
-  const [userProfile, setUserProfile] = useState([]);
+  const [StudentData, setStudentData] = useState([]);
   const [ShowRole, setShowRole] = useState("student");
+  const [deleteStatus, SetdeleteStatus] = useState(false);
 
   const UserDetails = async () => {
     try {
       let data = await callApi("get", `/allteacher?role=${ShowRole}`);
-      setUserProfile(data.data.data);
-      console.log("data of student list", data);
+      setStudentData(data.data.data);
     } catch (error) {
       console.log(error);
     }
@@ -28,13 +29,25 @@ const AllStuent = () => {
     Router.push(`/admin/update-student?id=${id}`);
   };
 
-  const DeleteDetails = (id) => {
-    Router.push(`/common-form/delete-student?id=${id}`);
+  
+  const DeleteUser = async (id) => {
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this school ?"
+    );
+    if (confirmed) {
+      try {
+        await deleteItem("/deleteteacher", id);
+        SetdeleteStatus(true)
+        console.log("Item deleted");
+      } catch (error) {
+        console.error(error.message);
+      }
+    }
   };
 
   useEffect(() => {
     UserDetails();
-  }, []);
+  }, [deleteStatus]);
 
   return (
     <>
@@ -56,8 +69,8 @@ const AllStuent = () => {
             </tr>
           </thead>
           <tbody>
-            {userProfile &&
-              userProfile.map((item, id) => {
+            {StudentData &&
+              StudentData.map((item, id) => {
                 return (
                   <Slide left key={item._id}>
                     <tr>
@@ -106,7 +119,7 @@ const AllStuent = () => {
                         <Button
                           variant="outlined"
                           size="medium"
-                          onClick={() => DeleteDetails(item._id)}
+                          onClick={() => DeleteUser(item._id)}
                         >
                           <DeleteIcon />
                         </Button>

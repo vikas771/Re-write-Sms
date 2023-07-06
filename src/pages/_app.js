@@ -5,29 +5,25 @@ import Style from "../styles/header.module.css";
 import localDetails from "../../utils/localstoragefile";
 import { useEffect, useState } from "react";
 import { ToastContainer } from "react-toastify";
-
-import { Router } from "next/router";
 import Login from "@/Component/common-forms/login";
 import Navbar from "@/Component/common-forms/navbar";
 import Footer from "@/Component/common-forms/footer";
 // import 'react-reveal/css/reveal.css';
 // import 'react-reveal/css/transition.css';
 
-
 export default function App({ Component, pageProps }) {
-  const LocalSData = localDetails();
+
+  const [LocalSData, setLocalSData] = useState("")
+  
 
   useEffect(() => {
     import("bootstrap/dist/js/bootstrap");
   }, []);
 
-  const [Loading, setLoading] = useState(false);
-  Router.events.on("routeChangeStart", (url) => {
-    setLoading(true);
-  });
-  Router.events.on("routeChangeComplete", (url) => {
-    setLoading(false);
-  });
+  useEffect(()=>{
+    const LocalSData = localDetails();
+    setLocalSData(LocalSData)
+  },[LocalSData])
 
   return (
     <>
@@ -42,14 +38,11 @@ export default function App({ Component, pageProps }) {
             </div>
             <ToastContainer
               position="top-center"
-              autoClose={5000}
+              autoClose={3000}
               hideProgressBar={false}
               newestOnTop={false}
               closeOnClick
               rtl={false}
-              pauseOnFocusLoss
-              draggable
-              pauseOnHover
               theme="light"
             />
             <Footer />
